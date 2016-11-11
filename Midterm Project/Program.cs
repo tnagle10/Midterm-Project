@@ -11,6 +11,14 @@ namespace Midterm_Project
         static void Main(string[] args)
         {
             Console.WriteLine("This is our midterm project");
+            List<Product> ProductList = Inventory.ReadDataFromFile();
+            foreach (var item in ProductList)
+            {
+                Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
+            }
+
+
+
         }
     }
 }

@@ -1,0 +1,6 @@
+﻿beverage, coffee, columbian, 5, 20
+beverage, coffee, french roast, 4.5, 25
+beverage, coffee, dunkin donuts, 3.5, 15
+beverage, coffee, starbucks, 6, 20
+beverage, tea, green, 3.5, 10
+beverage, tea, chai, 5, 18
