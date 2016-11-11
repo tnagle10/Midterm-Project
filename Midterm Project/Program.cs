@@ -10,6 +10,7 @@ namespace Midterm_Project
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("This is our midterm project");
         }
     }
 }
