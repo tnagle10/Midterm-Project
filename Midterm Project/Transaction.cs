@@ -32,14 +32,82 @@ namespace Midterm_Project
             return (allTotals);
         }
 
-        public static void processPayment( List<float>allTotals)
+      public static void processPayment( List<float>allTotals)
         {
-            Console.WriteLine("Please enter your payment method");
+            Console.WriteLine("Please enter your payment method,choose from cash/credit/check ");
+            Console.WriteLine("For cash enter 1");
+            Console.WriteLine("For check enter 2");
+            Console.WriteLine("For credit enter 3");
+
+            //validating and retreiving initial user input
+            int choice;
+            while (true)
+            {
+                while (!int.TryParse(Console.ReadLine(), out choice))
+                {
+
+                    Console.WriteLine("Please enter a correct value.");
+                }
+
+                if (!(choice >= 1 && choice <= 3))
+
+                    Console.WriteLine("Please enter 1, 2, or 3.");
+
+                else if (choice == 1 || choice == 2 || choice == 3)
+                {
+                    break;
+                }
+
+                //validating and retreiving initial user input
 
 
+            }
+            switch (choice)
+            {
+                case 1:
+
+                    float changeDue = getChange(allTotals);
+                    Console.WriteLine($"Your change due is {changeDue}");
+                    break;
+                case 2:
+                    Console.WriteLine("Please enter the check number");
+                    string checkNumber = Console.ReadLine();
+                    break;
+                case 3:
+                    Console.WriteLine("Enter Card Number");
+                    string cardNumber = Console.ReadLine();
+                    Console.WriteLine("Enter date of expiry");
+                    string expiryDate = Console.ReadLine();
+                    Console.WriteLine("Enter CVV");
+                    string CVV = Console.ReadLine();
+                    break;
+            }
 
         }
 
+        //altotals== {subTotal, taxTotal, grandTotal}
 
+        public static float getChange(List<float>allTotals)
+        {
+            float change= 0;
+            float totalPaidCash=0;
+            while (true)
+            {
+                Console.WriteLine("Please enter your cash amount.");
+                float paidCash;
+                while (!float.TryParse(Console.ReadLine(), out paidCash))
+                {
+
+                    Console.WriteLine("Please enter a correct value.");
+                }
+                totalPaidCash += paidCash;
+                change = totalPaidCash - allTotals[2];
+               
+                if (change < 0)
+                    Console.WriteLine($"You did not enter sufficient cash. You still owe ${Math.Round(Math.Abs(change),2)}");
+                else break;           
+            }
+            return change;
+        }
 
     }}//END
