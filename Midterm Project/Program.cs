@@ -34,10 +34,8 @@ namespace Midterm_Project
                 cart.genList(productsFound, out prodNumber);
                
                 List<float> Totals = Transaction.totalsCalc(ProductList);
-            } while (cart.keepGoing());
+                Transaction.processPayment(Totals);
 
-        }
-
-        
-    }
+            }
 }
+            
