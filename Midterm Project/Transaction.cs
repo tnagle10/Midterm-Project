@@ -8,16 +8,14 @@ namespace Midterm_Project
 {
     class Transaction
     {
-
-
-      public static List<float> totalsCalc(List<Product> Cart)
+        public static List<float> totalsCalc(List<Product> Cart)
         {
             float subTotal = 0;
             float grandTotal = 0;
             float taxTotal = 0;
             foreach (var product in Cart)
             {
-                subTotal += product.Price*product.Quantity;
+                subTotal += product.Price * product.Quantity;
 
             }
 
@@ -32,7 +30,7 @@ namespace Midterm_Project
             return (allTotals);
         }
 
-      public static void processPayment( List<float>allTotals)
+        public static void processPayment(List<float> allTotals)
         {
             Console.WriteLine("Please enter your payment method,choose from cash/credit/check ");
             Console.WriteLine("For cash enter 1");
@@ -71,15 +69,42 @@ namespace Midterm_Project
                     break;
                 case 2:
                     Console.WriteLine("Please enter the check number");
-                    string checkNumber = Console.ReadLine();
+                    int checkNumber;
+                    while (!int.TryParse(Console.ReadLine(), out checkNumber))
+                    {
+
+                        Console.WriteLine("Please enter an appropriate value.");
+                    }
                     break;
                 case 3:
-                    Console.WriteLine("Enter Card Number");
-                    string cardNumber = Console.ReadLine();
+                    long cardNumber;
+                    int CVV;
+                    Console.WriteLine("Enter your 16 digit Card Number");
+                    while (true)
+                    {
+                        while (!long.TryParse(Console.ReadLine(), out cardNumber))
+                        {
+                            Console.WriteLine("Please enter an appropriate value.");
+                        }
+                        if (cardNumber.ToString().Length != 16)
+                            Console.WriteLine("Please enter a 16 digit value");
+                        else break;
+                    }
+                    ///////////////////////////////////////
                     Console.WriteLine("Enter date of expiry");
-                    string expiryDate = Console.ReadLine();
+                    //DateTime expiryDate = Console.ReadLine();
+                    ///////////////////////////////////////
                     Console.WriteLine("Enter CVV");
-                    string CVV = Console.ReadLine();
+                    while (true)
+                    {
+                        while (!int.TryParse(Console.ReadLine(), out CVV))
+                        {
+                            Console.WriteLine("Please enter an appropriate value.");
+                        }
+                        if (CVV.ToString().Length != 3)
+                            Console.WriteLine("Please enter a 3 digit value");
+                        else break;
+                    }
                     break;
             }
 
@@ -87,10 +112,10 @@ namespace Midterm_Project
 
         //altotals== {subTotal, taxTotal, grandTotal}
 
-        public static float getChange(List<float>allTotals)
+        public static float getChange(List<float> allTotals)
         {
-            float change= 0;
-            float totalPaidCash=0;
+            float change = 0;
+            float totalPaidCash = 0;
             while (true)
             {
                 Console.WriteLine("Please enter your cash amount.");
@@ -102,12 +127,13 @@ namespace Midterm_Project
                 }
                 totalPaidCash += paidCash;
                 change = totalPaidCash - allTotals[2];
-               
+
                 if (change < 0)
-                    Console.WriteLine($"You did not enter sufficient cash. You still owe ${Math.Round(Math.Abs(change),2)}");
-                else break;           
+                    Console.WriteLine($"You did not enter sufficient cash. You still owe ${Math.Round(Math.Abs(change), 2)}");
+                else break;
             }
             return change;
         }
 
-    }}//END
+    }
+}//END
