@@ -23,18 +23,12 @@ namespace Midterm_Project
 
             string[] Records = Data.Split('\n');
 
-            //foreach (var item in Records)
-            //{
-            //    Console.WriteLine(item);
-            //}
-
-
             foreach (string record in Records)
             {
                 string[] rc = record.Split(',');
                 ProductList.Add(new Product(rc[0].Trim(), rc[1].Trim(), rc[2].Trim(), float.Parse(rc[3].Trim()), int.Parse(rc[4].Trim())));
             }
-            reader.Close(); //must close resources before you try to use it again in another capacity
+            reader.Close();
             return ProductList;
         }
 

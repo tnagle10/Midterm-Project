@@ -16,7 +16,7 @@ namespace Midterm_Project
             {
                 Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
             }
-
+            List<float> Totals = Transaction.totalsCalc(ProductList);
 
 
         }
