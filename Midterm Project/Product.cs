@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Midterm_Project
 {
-    class Product
+    public class Product
     {
         private string category;
         private string name;

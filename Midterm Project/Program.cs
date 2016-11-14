@@ -11,7 +11,7 @@ namespace Midterm_Project
     {
         static void Main(string[] args)
         {
-            
+
             List<Product> ProductList = Inventory.ReadDataFromFile();
             foreach (var item in ProductList)
             {
@@ -32,10 +32,12 @@ namespace Midterm_Project
                 cart.genList(productCategories, out category);
                 productsFound = cart.listProducts(ProductList, category);
                 cart.genList(productsFound, out prodNumber);
-               
+
                 List<float> Totals = Transaction.totalsCalc(ProductList);
                 Transaction.processPayment(Totals);
 
-            }
+            } while (cart.keepGoing());
+        }
+    }
 }
             
