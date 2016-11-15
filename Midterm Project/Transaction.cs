@@ -26,7 +26,12 @@ namespace Midterm_Project
             allTotals.Add(subTotal);
             allTotals.Add(taxTotal);
             allTotals.Add(grandTotal);
-            Console.WriteLine($"Subtotal: {subTotal}, SalesTax: {taxTotal}, Grandtotal {grandTotal}");
+
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine($"Subtotal:   ${Math.Round(subTotal,2)}");
+            Console.WriteLine($"SalesTax:   ${Math.Round(taxTotal, 2)}");
+            Console.WriteLine($"Grandtotal: ${Math.Round(grandTotal, 2)}");
+            Console.BackgroundColor = ConsoleColor.Black;
             return (allTotals);
         }
 
@@ -63,9 +68,8 @@ namespace Midterm_Project
             switch (choice)
             {
                 case 1:
-
                     float changeDue = getChange(allTotals);
-                    Console.WriteLine($"Your change due is {changeDue}");
+                    Console.WriteLine($"Your change due is ${Math.Round(changeDue,2)}");
                     break;
                 case 2:
                     Console.WriteLine("Please enter the check number");
@@ -77,24 +81,86 @@ namespace Midterm_Project
                     }
                     break;
                 case 3:
+                    DateTime currentDate = new DateTime();
+                    currentDate = DateTime.Now;
+                    int currentMonth = currentDate.Month;
+                    int currentYear= int.Parse(currentDate.Year.ToString().Substring(2));
                     long cardNumber;
                     int CVV;
-                    Console.WriteLine("Enter your 16 digit Card Number");
+                    Console.WriteLine("Enter your 16 digit Card Number in the format below:");
+                    Console.WriteLine("XXXXXXXXXXXXXXXX");
+                    ///////////////////////
                     while (true)
                     {
+                        //TODO present credit card format
+
                         while (!long.TryParse(Console.ReadLine(), out cardNumber))
                         {
                             Console.WriteLine("Please enter an appropriate value.");
+                            Console.WriteLine("XXXXXXXXXXXXXXXX");
                         }
                         if (cardNumber.ToString().Length != 16)
+                        {
                             Console.WriteLine("Please enter a 16 digit value");
+                            Console.WriteLine("XXXXXXXXXXXXXXXX");
+                        }
                         else break;
                     }
-                    ///////////////////////////////////////
-                    Console.WriteLine("Enter date of expiry");
-                    //DateTime expiryDate = Console.ReadLine();
-                    ///////////////////////////////////////
+                        ///////////////////////////////////////
+                       
+                    while (true)/////
+                    {
+                        Console.WriteLine("Enter year of expiration (YY) ");
+                        int year;
+                        //GET YEAR
+                        while (true)    
+                        {
+                            while (!int.TryParse(Console.ReadLine(), out year))
+                            {
+                                Console.WriteLine("Please enter a valid number for input of year.");
+                            }
+                            if (year <= 0)
+                            {
+                                Console.WriteLine("Year cannot be negative, please enter again.");
+                            }
+
+                            else break;
+                        }
+                        //GET MONTH
+                        Console.WriteLine("Select month of expiration Enter 1 - 12");
+                        int month;
+                        while (true)
+                        {
+                            while (!int.TryParse(Console.ReadLine(), out month))
+                            {
+                                Console.WriteLine("Please enter a valid number.");
+                            }
+                            if (month < 1 || month > 12)
+                                Console.WriteLine("Please enter a value that corresponds to a month. Please try enter another month.");
+
+                            else break;
+                        }
+
+                        //CHECK FOR EXPIRATION
+
+                        if ((year < currentYear) || (year == currentYear && month <= currentMonth))
+                        {
+                            Console.WriteLine("Your card has expired.");
+                        }
+
+
+                        else if ((year > currentYear + 5) || (year == currentYear + 5 && month > currentMonth))
+                        {
+                            Console.WriteLine("Expiration date cannot be beyond five years from current year. Please enter again.");
+                        }
+
+                        else break;
+                    }////
+
+
+
                     Console.WriteLine("Enter CVV");
+                    
                     while (true)
                     {
                         while (!int.TryParse(Console.ReadLine(), out CVV))
