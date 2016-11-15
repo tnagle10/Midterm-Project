@@ -14,50 +14,59 @@ namespace Midterm_Project
         {
 
             Console.WriteLine("\nThe following item has been added to the cart");
-            Console.WriteLine("Product Name              Description                Price               Quantity");
-            Console.WriteLine(newItem.Name.PadRight(25) + " "+newItem.Description.PadRight(25) + " $"+newItem.Price + "                " + newItem.Quantity);
+            Console.WriteLine("Product Name              Description                   Price         Quantity");
+            Console.WriteLine("******************************************************************************");
+            Console.WriteLine(newItem.Name.PadRight(28) +newItem.Description.PadRight(27) +newItem.Price.ToString().PadLeft(8) + newItem.Quantity.ToString().PadLeft(15));
             cartlist.Add(newItem);
 
             Console.WriteLine("\n\nHere is your current cart");
-            Console.WriteLine("Product Name              Description                Price               Quantity");
-            
+            Console.WriteLine("Product Name              Description                   Price         Quantity");
+            Console.WriteLine("******************************************************************************");
 
             foreach (Product item in cartlist)
             {
-                Console.WriteLine(item.Name.PadRight(25) + " " + item.Description.PadRight(25) + " $" + item.Price + "                " + item.Quantity);
+                Console.WriteLine(item.Name.PadRight(28) + item.Description.PadRight(27) + item.Price.ToString().PadLeft(8) + item.Quantity.ToString().PadLeft(15));
             }
            
         }
 
         public Product chooseQuantity(List<Product> Inventory, Product item)
         {
+            /*
+               Name: chooseQuantity
+               Description: This method displays a list of products, and gets the customer to select a Quantity
+               Input: Inventory list of Products and a chosen Product
+               Output: A chosen Quantity
+            */
+
+            // Initial quantity is 0
             int quantity = 0;
+            // Boolean value for valid input
             Boolean valid = false;
+            // Create a new Product for the cart separate from Inventory
             Product cart = new Product("","","",0,0);
             
-
-            
+            // Loop until customer chooses quantity            
             while (valid == false)
             {
                 Console.WriteLine("How many would you like?");
                 if (!(int.TryParse(Console.ReadLine(), out quantity)))
+                // Quantity is not a valid integer
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.WriteLine("You entered an invalid number\n\n");
                     Console.BackgroundColor = ConsoleColor.Black;
 
                 }
-
+                // Quantity is valid, update the Inventory, and the quantity of the selected Product
                 else if ((quantity >= 0) && (quantity <= item.Quantity))
                 {
-                    //int find = Inventory.FindIndex(x => x.Name == item.Name);
-                    //Inventory[find].Quantity = Inventory[find].Quantity - quantity;
                     item.Quantity = item.Quantity - quantity;
                     cart.Quantity = quantity;
                     valid = true;
 
                 }
-
+                // Quantity is more than the quantity in Inventory
                 else if ((quantity > 0) && (quantity > item.Quantity))
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
@@ -66,6 +75,7 @@ namespace Midterm_Project
                     valid = false;
 
                 }
+                // Generic error of bad number
                 else
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
@@ -76,26 +86,41 @@ namespace Midterm_Project
 
             }
 
+            // Set values for the cart Product
             cart.Category = item.Category;
             cart.Description = item.Description;
             cart.Name = item.Name;
             cart.Price = item.Price;
             cart.Quantity = quantity;
+
+            // Return the Product in the cart
             return cart;
             
         }
 
         public Product chooseProduct(List<Product> Inventory, string category)
         {
+            /*
+               Name: chooseProduct
+               Description: This method displays a list of products, and gets the customer to select a Product
+               Input: Inventory list of Products and a chosen category
+               Output: A chosen Product
+            */
+            // New Product type that will hold pick
+            Product chosen = new Product("invalid", "invalid", "invalid", 0, 0);
+
             // Get a list of products that are in the same category
             List<Product> prodList = createProductList(Inventory,category);
-            
+            if (prodList.Count == 0)
+            {
+                return chosen;
+            }
+
             // Create a new list of sorted product names
             List<string> prodName = new List<string>();
             foreach (Product product in prodList)
             {
-                
-                 prodName.Add(product.Name);
+                prodName.Add(product.Name);
                    
             }
             
@@ -106,7 +131,7 @@ namespace Midterm_Project
             // Loop until customer picks an item
             Boolean valid = false;
             int input = 0;
-            Product chosen = new Product("", "", "", 0, 0);
+            
             while (valid == false)
             {
 
@@ -122,10 +147,12 @@ namespace Midterm_Project
 
                 // Build a product menu list
                 Console.WriteLine("\nPlease choose a product:");
-                Console.WriteLine("Product Name                Description                Price               Quantity");
+                Console.WriteLine("Product Name                Description                 Price    Quantity");
+                Console.WriteLine("*************************************************************************");
                 for (int i = 0; i < prodListSorted.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(25) + " " + prodListSorted[i].Description.PadRight(25)+ "  $" +prodListSorted[i].Price + "                  "+prodListSorted[i].Quantity);
+                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(25) + prodListSorted[i].Description.PadRight(25)+prodListSorted[i].Price.ToString().PadLeft(8) +prodListSorted[i].Quantity.ToString().PadLeft(10));
+                    
                 }
 
                 // Read in a number, and check to make sure it is a valid integer
@@ -136,10 +163,10 @@ namespace Midterm_Project
                     Console.BackgroundColor = ConsoleColor.Black;
 
                 }
-
+                // Selection number is good
                 else if ((input > 0) && (input <= prodList.Count))
                 {
-                    Console.WriteLine("\nYou chose " + prodListSorted[input - 1].Name + " " + prodListSorted[input - 1].Description + "\n");
+                    Console.WriteLine("\nYou chose " + prodListSorted[input - 1].Description + " " + prodListSorted[input - 1].Name + "\n");
                     valid = true;
                     chosen = prodListSorted[input - 1];
                 }
@@ -160,11 +187,13 @@ namespace Midterm_Project
 
         public string chooseCategory(List<Product> inventory)
         {
-            // Name: chooseCategory
-            // Description: This method takes a product list and generates a category list.  It then generates
-            // a menu of categories for a customer to pick.  
-            // Inputs: List of products
-            // Output: Category chosen by customer.
+            /*
+             Name: chooseCategory
+             Description: This method takes a product list and generates a category list.  It then generates
+                          a menu of categories for a customer to pick.  
+             Inputs: List of products
+             Output: Category chosen by customer.
+            */
 
             // Create a hash table of categories      
             Hashtable categories = createCategoryList(inventory);
@@ -230,15 +259,18 @@ namespace Midterm_Project
 
         public Hashtable createCategoryList(List<Product> Inventory)
         {
+            /*
+               Name: createCategoryList
+               Description: This method creates a hash table of categories from a product list
+               Input: Product list
+               Output: Hash 
+            */
 
-            // Name: createCategoryList
-            // Description: This method creates a hash table of categories from a product list
-            // Input: Product list
-            // Output: Hash 
+            // Create a Hashtable that holds categories
             Hashtable categories = new Hashtable();
             foreach (Product item in Inventory)
             {
-                //Console.WriteLine(movie.Category1.GetHashCode());
+                // Add each category to Hash table
                 try
                 {
                     categories.Add(item.Category.GetHashCode(), item.Category);
@@ -256,30 +288,36 @@ namespace Midterm_Project
 
         }
 
-        public List<Product> createProductList(List<Product> Inventory,string category)
+        public List<Product> createProductList(List<Product> Inventory, string category)
         {
+            /* Name: createProductList
+               Description:  This method returns a list of products that match the Category
+               Input:  The inventory list and a chosen category
+               Output: Returns a list of Products that match the category
+            */
+
+            // Create a new list that holds products that match category
             List<Product> prodList = new List<Product>();
+            // Loop through the inventory and add products to list that match category
             foreach (Product item in Inventory)
             {
-                prodList = Inventory.FindAll(x => x.Category == category);
+                prodList = Inventory.FindAll(x => x.Category == category && x.Quantity > 0);
             }
-            
             return prodList;
-
-        }
+        } 
 
         public bool keepGoing()
         {
             /* Name: keepGoing
-            * Description:  This method implements a loop to determine if users wants to continue
-            * Input:  None
-            * Output: Returns false if user doesn't want to continue.  Otherwise returns true.
-            *         Outputs values to Console
+               Description:  This method implements a loop to determine if users wants to continue
+               Input:  None
+               Output: Returns false if user doesn't want to continue.  Otherwise returns true.
+                       Outputs values to Console
             */
 
 
             // If user enters "q", execute exit procedure
-            Console.WriteLine("\nContinue? (y/n):");
+            Console.WriteLine("\nAdd another item to cart? (y/n):");
             string input = Console.ReadLine();
 
             if (input == "n")

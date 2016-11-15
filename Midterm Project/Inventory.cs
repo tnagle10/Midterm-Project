@@ -18,6 +18,7 @@ namespace Midterm_Project
             string fileLocation = "../../Inventory.txt";
 
             StreamReader reader = new StreamReader(fileLocation);
+            
 
             string Data = reader.ReadToEnd().Trim();
 
@@ -31,7 +32,17 @@ namespace Midterm_Project
             reader.Close();
             return ProductList;
         }
+        public static void WriteDataToFile(List<Product> ProductList)
+        {
 
+            StreamWriter sw = new StreamWriter("../../Inventory.txt");
+            foreach (var item in ProductList)
+            {
+                sw.Write($"\n{item.Category},{item.Name},{item.Description},{item.Price},{item.Quantity}");
+            }
+
+            sw.Close();
+        }
 
 
 
