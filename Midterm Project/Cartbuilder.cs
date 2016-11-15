@@ -10,10 +10,33 @@ namespace Midterm_Project
     public class Cartbuilder
     {
 
+        public void buildCart(List<Product> cartlist,Product newItem)
+        {
+
+            Console.WriteLine("\nThe following item has been added to the cart");
+            Console.WriteLine("Product Name              Description                Price               Quantity");
+            Console.WriteLine(newItem.Name.PadRight(25) + " "+newItem.Description.PadRight(25) + " $"+newItem.Price + "                " + newItem.Quantity);
+            cartlist.Add(newItem);
+
+            Console.WriteLine("\n\nHere is your current cart");
+            Console.WriteLine("Product Name              Description                Price               Quantity");
+            
+
+            foreach (Product item in cartlist)
+            {
+                Console.WriteLine(item.Name.PadRight(25) + " " + item.Description.PadRight(25) + " $" + item.Price + "                " + item.Quantity);
+            }
+           
+        }
+
         public Product chooseQuantity(List<Product> Inventory, Product item)
         {
             int quantity = 0;
             Boolean valid = false;
+            Product cart = new Product("","","",0,0);
+            
+
+            
             while (valid == false)
             {
                 Console.WriteLine("How many would you like?");
@@ -27,8 +50,10 @@ namespace Midterm_Project
 
                 else if ((quantity > 0) && (quantity <= item.Quantity))
                 {
-                    int find = Inventory.FindIndex(x => x.Name == item.Name);
-                    Inventory[find].Quantity = Inventory[find].Quantity - quantity;
+                    //int find = Inventory.FindIndex(x => x.Name == item.Name);
+                    //Inventory[find].Quantity = Inventory[find].Quantity - quantity;
+                    item.Quantity = item.Quantity - quantity;
+                    cart.Quantity = quantity;
                     valid = true;
 
                 }
@@ -50,7 +75,13 @@ namespace Midterm_Project
                 }
 
             }
-            return item;
+
+            cart.Category = item.Category;
+            cart.Description = item.Description;
+            cart.Name = item.Name;
+            cart.Price = item.Price;
+            cart.Quantity = quantity;
+            return cart;
             
         }
 
@@ -223,12 +254,12 @@ namespace Midterm_Project
 
         }
 
-        public List<Product> createProductList(List<Product> Inventory,string cat)
+        public List<Product> createProductList(List<Product> Inventory,string category)
         {
             List<Product> prodList = new List<Product>();
             foreach (Product item in Inventory)
             {
-                prodList = Inventory.FindAll(x => x.Category == cat);
+                prodList = Inventory.FindAll(x => x.Category == category);
             }
             
             return prodList;

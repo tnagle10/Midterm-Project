@@ -13,22 +13,19 @@ namespace Midterm_Project
         {
 
             List<Product> ProductList = Inventory.ReadDataFromFile();
-            foreach (var item in ProductList)
-            {
-                Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
-            }
+            //foreach (var item in ProductList)
+            //{
+            //    Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
+            //}
 
-          
+            List<Product> cartlist = new List<Product>();
             Cartbuilder cart = new Cartbuilder();
             do {
 
                 string category = cart.chooseCategory(ProductList);
                 Product chosenWithoutQuantity = cart.chooseProduct(ProductList, category);
                 Product chosenWithQuantity = cart.chooseQuantity(ProductList, chosenWithoutQuantity);
-                foreach (var item in ProductList)
-                {
-                    Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
-                }
+                cart.buildCart(cartlist, chosenWithQuantity);
 
             } while (cart.keepGoing());
             //List<float> Totals = Transaction.totalsCalc(ProductList);
