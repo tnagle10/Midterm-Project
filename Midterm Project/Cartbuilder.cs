@@ -48,7 +48,7 @@ namespace Midterm_Project
 
                 }
 
-                else if ((quantity > 0) && (quantity <= item.Quantity))
+                else if ((quantity >= 0) && (quantity <= item.Quantity))
                 {
                     //int find = Inventory.FindIndex(x => x.Name == item.Name);
                     //Inventory[find].Quantity = Inventory[find].Quantity - quantity;
@@ -94,7 +94,9 @@ namespace Midterm_Project
             List<string> prodName = new List<string>();
             foreach (Product product in prodList)
             {
-                prodName.Add(product.Name);
+                
+                 prodName.Add(product.Name);
+                   
             }
             
             // Sort the list
