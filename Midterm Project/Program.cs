@@ -18,26 +18,23 @@ namespace Midterm_Project
                 Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
             }
 
-            string category = "";
+          
             Cartbuilder cart = new Cartbuilder();
             do {
-                Hashtable productCategories = new Hashtable();
-                List<Product> productsFound = new List<Product>();
 
-                //productCategories = createCategoryList(ProductList);
-                int prodNumber = 0;
-                //cart.genList(categories,  out category);
-                productCategories = cart.createCategoryList(ProductList);
-                Console.Write("\nPlease choose a product category.\n");
-                cart.genList(productCategories, out category);
-                productsFound = cart.listProducts(ProductList, category);
-                cart.genList(productsFound, out prodNumber);
-
-                List<float> Totals = Transaction.totalsCalc(ProductList);
-                Transaction.processPayment(Totals);
+                string category = cart.chooseCategory(ProductList);
+                Product chosenWithoutQuantity = cart.chooseProduct(ProductList, category);
+                Product chosenWithQuantity = cart.chooseQuantity(ProductList, chosenWithoutQuantity);
+                foreach (var item in ProductList)
+                {
+                    Console.WriteLine($"{item.Category}, {item.Name}, {item.Description}, {item.Price}, {item.Quantity}");
+                }
 
             } while (cart.keepGoing());
+            //List<float> Totals = Transaction.totalsCalc(ProductList);
+            //Transaction.processPayment(Totals);
         }
+
+        
     }
 }
-            

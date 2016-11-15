@@ -10,131 +10,198 @@ namespace Midterm_Project
     public class Cartbuilder
     {
 
-
-
-
-
-        public void genList(List<Product> prodList, out int option)
+        public Product chooseQuantity(List<Product> Inventory, Product item)
         {
+            int quantity = 0;
             Boolean valid = false;
-            int input = 0;
-
             while (valid == false)
             {
-
-                //Console.WriteLine("Please choose one of the following options: ");
-                for (int i = 0; i < prodList.Count; i++)
+                Console.WriteLine("How many would you like?");
+                if (!(int.TryParse(Console.ReadLine(), out quantity)))
                 {
-                    Console.WriteLine(i + 1 + ": " + prodList[i].Name.PadRight(25) + " "+prodList[i].Description.PadRight(25));
-                }
-
-
-
-
-                if (!(int.TryParse(Console.ReadLine(), out input)))
-                {
-                    Console.WriteLine("You entered an invalid number");
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
 
                 }
 
-
-
-                if ((input > 0) && (input <= prodList.Count + 1))
+                else if ((quantity > 0) && (quantity <= item.Quantity))
                 {
-                    Console.WriteLine("\nYou chose " + prodList[input - 1].Name.PadRight(25) + " "+prodList[input-1].Description.PadRight(25)+"\n");
+                    int find = Inventory.FindIndex(x => x.Name == item.Name);
+                    Inventory[find].Quantity = Inventory[find].Quantity - quantity;
                     valid = true;
+
+                }
+
+                else if ((quantity > 0) && (quantity > item.Quantity))
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Sorry, we don't have enough in stock.\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    valid = false;
+
                 }
                 else
                 {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
                     valid = false;
                 }
 
-
             }
-            option = input;
-
+            return item;
+            
         }
 
-        public void genList(Hashtable catHash, out string category)
+        public Product chooseProduct(List<Product> Inventory, string category)
         {
+            // Get a list of products that are in the same category
+            List<Product> prodList = createProductList(Inventory,category);
+            
+            // Create a new list of sorted product names
+            List<string> prodName = new List<string>();
+            foreach (Product product in prodList)
+            {
+                prodName.Add(product.Name);
+            }
+            
+            // Sort the list
+            prodName.Sort();
+
+           
+            // Loop until customer picks an item
             Boolean valid = false;
             int input = 0;
-
-            string[] names = new string[catHash.Count];
+            Product chosen = new Product("", "", "", 0, 0);
             while (valid == false)
             {
 
-                int ctr = 0;
-                //Console.WriteLine("\nPlease choose one of the following options");
+                // Create a new product list that will hold sorted products
+                List<Product> prodListSorted = new List<Product>();
 
-                foreach (DictionaryEntry entry in catHash)
+                // Build the sorted product list
+                foreach (string name in prodName)
                 {
-                    //Console.WriteLine(ctr + ": " + entry.Value);
-                    names[ctr] = entry.Value.ToString();
-                    ctr++;
-
+                    Product found = prodList.Find(x => x.Name == name);
+                    prodListSorted.Add(found);
                 }
 
-
-
-                for (int i = 0; i < names.Length; i++)
+                // Build a product menu list
+                Console.WriteLine("\nPlease choose a product:");
+                Console.WriteLine("Product Name                Description                Price               Quantity");
+                for (int i = 0; i < prodListSorted.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + ": " + names[i]);
+                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(25) + " " + prodListSorted[i].Description.PadRight(25)+ "  $" +prodListSorted[i].Price + "                  "+prodListSorted[i].Quantity);
                 }
 
-
-
-
+                // Read in a number, and check to make sure it is a valid integer
                 if (!(int.TryParse(Console.ReadLine(), out input)))
                 {
-                    Console.WriteLine("You entered an invalid number\n");
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
 
                 }
 
-
-
-                if ((input > 0) && (input <= names.Length))
+                else if ((input > 0) && (input <= prodList.Count))
                 {
-                    //Console.WriteLine("\nYou chose " + names[input - 1] + "\n");
-
+                    Console.WriteLine("\nYou chose " + prodListSorted[input - 1].Name + " " + prodListSorted[input - 1].Description + "\n");
                     valid = true;
+                    chosen = prodListSorted[input - 1];
                 }
                 else
                 {
-                    Console.WriteLine("You entered an invalid number");
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
                     valid = false;
                 }
 
-
             }
-            category = names[input - 1];
+
+            
+            return chosen;
 
         }
 
+        public string chooseCategory(List<Product> inventory)
+        {
+            // Name: chooseCategory
+            // Description: This method takes a product list and generates a category list.  It then generates
+            // a menu of categories for a customer to pick.  
+            // Inputs: List of products
+            // Output: Category chosen by customer.
 
-        //public static List<Product> createInitMovieList()
-        //{
-        //    List<Movie> gcMovies = new List<Movie>();
+            // Create a hash table of categories      
+            Hashtable categories = createCategoryList(inventory);
+            // Boolean value to test for valid input
+            Boolean valid = false;
+            
+            // Category number that user picks
+            int input = 0;
+            // List of category names.  Put it to list for sorting.
+            List<string> catList = new List<string>();
+            
 
+            Console.WriteLine("*****************************************************************************");
+            Console.WriteLine("*                Welcome to the Grand Circus Grocery Store                  *");
+            Console.WriteLine("*                                                                           *");
+            Console.WriteLine("*****************************************************************************");
+            while (valid == false)
+            {
+        
+                Console.WriteLine("\nPlease choose a product category:");
+                // For each entry in the Hash table, create an entry in catNames array
+                // This is just a list of categories
+                foreach (DictionaryEntry entry in categories)
+                {
+                   catList.Add(entry.Value.ToString());
+                }
 
-        //    // Add movies to list
-        //    gcMovies.Add(new Movie("Star Wars", "scifi"));
-        //    gcMovies.Add(new Movie("The Empire Strikes Back", "scifi"));
-        //    gcMovies.Add(new Movie("Return of the Jedi", "scifi"));
-        //    gcMovies.Add(new Movie("The Jungle Book", "animated"));
-        //    gcMovies.Add(new Movie("Cars", "animated"));
-        //    gcMovies.Add(new Movie("Goodfellas", "drama"));
-        //    gcMovies.Add(new Movie("Godfather I", "drama"));
-        //    gcMovies.Add(new Movie("Godfather II", "drama"));
-        //    gcMovies.Add(new Movie("Halloween", "horror"));
-        //    gcMovies.Add(new Movie("Scream", "horror"));
+                // Sort the categories
+                catList.Sort();
 
+                // Print the categories in a list with a number corresponding to each category
+                for (int i = 0; i < catList.Count; i++)
+                {
+                    Console.WriteLine(i + 1 + ": " + catList[i]);
+                }
 
-        //    return gcMovies;
-        //}
+                // Read in a number, and check to make sure it is a valid integer
+                if (!(int.TryParse(Console.ReadLine(), out input)))
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+                // Check to make sure number is in the correct range
+                else if ((input > 0) && (input <= catList.Count))
+                {
+                    valid = true;
+                }
+                // Number is not in the range
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You entered an invalid number\n\n");
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    valid = false;
+                }
+            }
+            
+            // Output the category chosen
+            return catList[input - 1];
+
+        }
 
         public Hashtable createCategoryList(List<Product> Inventory)
         {
+
+            // Name: createCategoryList
+            // Description: This method creates a hash table of categories from a product list
+            // Input: Product list
+            // Output: Hash 
             Hashtable categories = new Hashtable();
             foreach (Product item in Inventory)
             {
@@ -156,88 +223,17 @@ namespace Midterm_Project
 
         }
 
-        public void Search(Hashtable HTable)
+        public List<Product> createProductList(List<Product> Inventory,string cat)
         {
-            Console.Write("Please enter the name your are looking for:  ");
-            string input = Console.ReadLine();
-
-            if (HTable.ContainsValue(input))
-            {
-                Console.WriteLine("Found it");
-
-            }
-            else
-            {
-                Console.WriteLine("Not found");
-            }
-
-
-        }
-
-        //public void listProducts(List<Product> Inventory)
-        //{
-
-           
-        //    Console.WriteLine("\nTitle                   Category");
-        //    Console.WriteLine("**********************************");
-
-        //    List<Product> productList = new List<Product>();
-
-        //    foreach (Product item in Inventory)
-        //    {
-        //        productList = Inventory.FindAll(x => x.Category == category);
-        //    }
-        //    productList.Sort();
-
-        //    foreach (Product item in productList)
-        //    {
-        //        Console.WriteLine(item.Name.PadRight(25) + " " + item.Category.PadRight(10));
-        //    }
-            
-
-            
-
-        //}
-
-
-        public List<Product> listProducts(List<Product> Inventory,string cat)
-        {
-
-            
-            Console.WriteLine("\nTitle                   Category");
-            Console.WriteLine("**********************************");
-
-
-            //List<string> products = new List<string>();
-
-            //foreach (Product item in Inventory)
-            //{
-
-            //    products.Add(item.Name);
-
-            //}
-
             List<Product> prodList = new List<Product>();
             foreach (Product item in Inventory)
             {
                 prodList = Inventory.FindAll(x => x.Category == cat);
             }
             
-                
-
-            //prodList.Sort();
-
-
-            foreach (Product item in prodList)
-            {
-
-                //Console.WriteLine(item.Name.PadRight(25)+item.Category.PadRight(25));
-            }
-
             return prodList;
 
         }
-
 
         public bool keepGoing()
         {
@@ -262,123 +258,6 @@ namespace Midterm_Project
 
             return true;
         }
-
-
-        //public static void addMovies(List<Movie> input, string title, string category, out Hashtable catHash)
-        //{
-
-        //    if (!(findMovieByTitle(input, title)))
-        //    // Movie is not in list
-        //    {
-        //        input.Add(new Movie(title, category));
-
-
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("The movie {0} already exists in the list", title);
-        //    }
-
-        //    catHash = createCategoryList(input);
-
-
-
-
-
-        //}
-
-        //public static string getMovieAttributeS(string input)
-        //{
-        //    string output = "";
-        //    bool good = false;
-        //    while (!(good))
-        //    {
-        //        Console.Write("\nEnter movie {0}: ", input);
-        //        output = Console.ReadLine();
-        //        if (output == "")
-        //        {
-        //            Console.WriteLine("You entered an invalid {0}.  Please try again", input);
-        //            output = "";
-
-        //        }
-        //        else
-        //        {
-        //            good = true;
-        //        }
-
-        //    }
-
-        //    return output;
-        //}
-
-        ////public static void findMovieByTitle(List<Movie> input)
-        ////{
-        ////    string title = getMovieAttributeS("title");
-        ////    int loc = input.FindIndex(x => x.Title1 == title);
-        ////    if (loc >= 0)
-        ////    {
-        ////        Console.WriteLine("Congratulations, we have movie {0} ", input[loc].Title1);
-        ////    }
-        ////    else
-        ////    {
-        ////        Console.WriteLine("Sorry, we don't have that title");
-        ////    }
-
-        ////}
-
-        //public static bool findMovieByTitle(List<Movie> input, string title)
-        //{
-
-
-
-        //    for (int i = 0; i < input.Count; i++)
-        //    {
-        //        if (input[i].Title1 == title)
-        //        {
-
-        //            return true;
-        //        }
-        //    }
-
-
-        //    return false;
-
-        //}
-
-
-        //public static void findMoviesByCategory(List<Movie> movieList, out Hashtable catHash)
-        //{
-
-        //    string cat;
-        //    catHash = createCategoryList(movieList);
-        //    genList(catHash, out cat);
-
-        //    //string category = getMovieAttributeS(cat);
-        //    Console.WriteLine(cat);
-        //    List<Movie> moviesFound = movieList.FindAll(x => x.Category1 == cat);
-        //    //moviesFound.Sort();
-        //    listMovies(moviesFound);
-
-        //}
-
-
-
-        //public void findProductsByCategory(List<Product> Inventory)
-        //{
-
-        //    string cat;
-        //    Hashtable catHash = new Hashtable();
-        //    catHash = createCategoryList(Inventory);
-        //    genList(catHash, out cat);
-
-        //    //string category = getMovieAttributeS(cat);
-        //    Console.WriteLine(cat);
-        //    List<Product> productsFound = Inventory.FindAll(x => x.Category == cat);
-        //    //moviesFound.Sort();
-        //    listProducts(productsFound);
-
-        //}
-
 
     }
 }
