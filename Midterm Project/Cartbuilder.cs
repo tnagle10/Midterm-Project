@@ -14,18 +14,18 @@ namespace Midterm_Project
         {
 
             Console.WriteLine("\nThe following item has been added to the cart");
-            Console.WriteLine("Product Name              Description                   Price         Quantity");
-            Console.WriteLine("******************************************************************************");
-            Console.WriteLine(newItem.Name.PadRight(28) +newItem.Description.PadRight(27) +newItem.Price.ToString().PadLeft(8) + newItem.Quantity.ToString().PadLeft(15));
+            Console.WriteLine("Product Name        Description                            Price    Quantity");
+            Console.WriteLine("*******************************************************************************");
+            Console.WriteLine(newItem.Name.PadRight(20) +newItem.Description.PadRight(38) +newItem.Price.ToString().PadLeft(4) + newItem.Quantity.ToString().PadLeft(10));
             cartlist.Add(newItem);
 
             Console.WriteLine("\n\nHere is your current cart");
-            Console.WriteLine("Product Name              Description                   Price         Quantity");
-            Console.WriteLine("******************************************************************************");
+            Console.WriteLine("Product Name        Description                            Price    Quantity");
+            Console.WriteLine("*******************************************************************************");
 
             foreach (Product item in cartlist)
             {
-                Console.WriteLine(item.Name.PadRight(28) + item.Description.PadRight(27) + item.Price.ToString().PadLeft(8) + item.Quantity.ToString().PadLeft(15));
+                Console.WriteLine(item.Name.PadRight(20) + item.Description.PadRight(38) + item.Price.ToString().PadLeft(4) + item.Quantity.ToString().PadLeft(10));
             }
            
         }
@@ -147,15 +147,15 @@ namespace Midterm_Project
 
                 // Build a product menu list
                 Console.WriteLine("\nPlease choose a product:");
-                Console.WriteLine("Product Name                Description                 Price    Quantity");
-                Console.WriteLine("*************************************************************************");
+                Console.WriteLine("Product Name           Description                            Price    Quantity");
+                Console.WriteLine("*******************************************************************************");
                 for (int i = 0; i < prodListSorted.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(25) + prodListSorted[i].Description.PadRight(25)+prodListSorted[i].Price.ToString().PadLeft(8) +prodListSorted[i].Quantity.ToString().PadLeft(10));
-                    
+                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(20) + prodListSorted[i].Description.PadRight(38)+prodListSorted[i].Price.ToString().PadLeft(4) +prodListSorted[i].Quantity.ToString().PadLeft(10));
                 }
 
                 // Read in a number, and check to make sure it is a valid integer
+                Console.WriteLine();
                 if (!(int.TryParse(Console.ReadLine(), out input)))
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
