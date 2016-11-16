@@ -1,6 +1,46 @@
-﻿beverage, coffee, columbian, 5, 20
-beverage, coffee, french roast, 4.5, 25
-beverage, coffee, dunkin donuts, 3.5, 15
-beverage, coffee, starbucks, 6, 20
-beverage, tea, green, 3.5, 10
-beverage, tea, chai, 5, 18
+
+beverage,coffee-chocolate,french roast American coffee,4.5,25
+beverage,coffee-flat-white,New Zealand-make coffee,3.5,15
+beverage,coffee-sugar free,Michigan-starbucks coffee,6,20
+beverage,tea-Zealand,honey green,3.5,10
+beverage,juice,Orchard American apple,2.5,15
+beverage,soda,diet London cokacola,1.6,20
+beverage,tea-Florida,Strawberry-chai,5,18
+bread,sandwich,subway meat loaves,1.2,2
+bread,tortillas-honey chips,Calivonia tortillas,3,4
+bread,dinner-bread,canada-rolls bread,1.3,4
+canned,vegetable-goods,vegetable Chicago salad,2.5,6
+canned,soup,Philadephia Lentil soup,6.3,10
+canned,spaghetti goods,Homemade spaghetti source,4.6,9
+dairy,milk,Almond milk Ohio-make,3.5,5
+dairy,yogurt,Delaware vanilla flavour,8.5,6
+dairy,butter,Smart care butter,7.5,9
+dairy,blue-cheeses,Industry made cheeses,5,7
+dairy,Chicken-eggs,day hashed eggs,6,24
+baking goods,cereals,Dark Chocolate Almond cereal,12,3
+baking goods,flour,Aunty Lola flour,2.5,5
+baking goods,sugar,Canadian Organic,1.5,4
+baking goods,pasta,Itallian organic pasta,6.5,6
+baking goods,mixes,wholesome baking mix,5.6,2
+frozen foods,waffles,New York waffles,4.5,12
+frozen foods,mixed-vegetables,Indiana organic mixed-vegetables,7.4,10
+frozen foods,ice cream,Cleveland dairy Queen ice cream,10,2
+meat,lunch meat,Healthy organic lunchable,8.5,3
+meat,poultry,Home grown Turkey,30,16
+meat,beef,Oriental beef,25,5
+meat,pork,Korean tender pork,9,7
+produce,fruit,Roman seedless grapes,7.5,6
+produce,grain,Uncle Ben's Rice,8,5
+cleaners,all purpose,Ace non-toxic,7,2
+cleaners,laudry detergent,Spartan cloth stain remover,15,1
+cleaners,dishwashing soap,Drawn kitchen soap,20,2
+paper goods,paper towels,Charmin strong towel,16.99,1
+paper goods,toilet paper,Delol soft tissue,20,3
+paper goods,alminum foil,Glad press and seal wrapper,15,2
+paper goods,sandwich bags,Ziploc snack bag,10,4
+personal care,shampoo,Grace dandruff care,12.5,2
+personal care,soap,New Jersy gentle body soap,11,3
+personal care,hand soap,pelident soft soap,5.5,2
+personal care,shaving cream,Magic clean phase hair remover,15,3
+baby product,daiper,Always absorbvable baby pant,30,5
+baby product,wipes,Asthon soft and clean wet paper,12,2
