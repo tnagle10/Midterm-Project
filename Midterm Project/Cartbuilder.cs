@@ -16,7 +16,7 @@ namespace Midterm_Project
             Console.WriteLine("\nThe following item has been added to the cart");
             Console.WriteLine("Product Name        Description                            Price    Quantity");
             Console.WriteLine("*******************************************************************************");
-            Console.WriteLine(newItem.Name.PadRight(20) +newItem.Description.PadRight(38) +newItem.Price.ToString().PadLeft(4) + newItem.Quantity.ToString().PadLeft(10));
+            Console.WriteLine(newItem.Name.PadRight(20) +newItem.Description.PadRight(38) +newItem.Price.ToString().PadLeft(6) + newItem.Quantity.ToString().PadLeft(10));
             cartlist.Add(newItem);
 
             Console.WriteLine("\n\nHere is your current cart");
@@ -25,7 +25,7 @@ namespace Midterm_Project
 
             foreach (Product item in cartlist)
             {
-                Console.WriteLine(item.Name.PadRight(20) + item.Description.PadRight(38) + item.Price.ToString().PadLeft(4) + item.Quantity.ToString().PadLeft(10));
+                Console.WriteLine(item.Name.PadRight(20) + item.Description.PadRight(38) + item.Price.ToString().PadLeft(6) + item.Quantity.ToString().PadLeft(10));
             }
            
         }
@@ -113,6 +113,7 @@ namespace Midterm_Project
             List<Product> prodList = createProductList(Inventory,category);
             if (prodList.Count == 0)
             {
+                chosen = new Product("out", "out", "out", 0, 0);
                 return chosen;
             }
 
@@ -146,12 +147,12 @@ namespace Midterm_Project
                 }
 
                 // Build a product menu list
-                Console.WriteLine("\nPlease choose a product:");
+                Console.WriteLine("\nPlease choose a product:  (Choose -1 to exit)");
                 Console.WriteLine("Product Name           Description                            Price    Quantity");
                 Console.WriteLine("*******************************************************************************");
                 for (int i = 0; i < prodListSorted.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(20) + prodListSorted[i].Description.PadRight(38)+prodListSorted[i].Price.ToString().PadLeft(4) +prodListSorted[i].Quantity.ToString().PadLeft(10));
+                    Console.WriteLine(i + 1 + ": " + prodListSorted[i].Name.PadRight(20) + prodListSorted[i].Description.PadRight(38)+prodListSorted[i].Price.ToString().PadLeft(6) +prodListSorted[i].Quantity.ToString().PadLeft(10));
                 }
 
                 // Read in a number, and check to make sure it is a valid integer
@@ -163,6 +164,7 @@ namespace Midterm_Project
                     Console.BackgroundColor = ConsoleColor.Black;
 
                 }
+
                 // Selection number is good
                 else if ((input > 0) && (input <= prodList.Count))
                 {
@@ -170,7 +172,12 @@ namespace Midterm_Project
                     valid = true;
                     chosen = prodListSorted[input - 1];
                 }
-                else
+                else if (input < 0)
+                {
+                    chosen = new Product("no choice", "no choice", "no choice", 0, 0);
+                    return chosen;
+                }
+                else 
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.WriteLine("You entered an invalid number\n\n");
@@ -227,10 +234,11 @@ namespace Midterm_Project
                 // Print the categories in a list with a number corresponding to each category
                 for (int i = 0; i < catList.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + ": " + catList[i]);
+                    Console.WriteLine((i + 1).ToString().PadLeft(3) + ": "+ catList[i]);
                 }
 
                 // Read in a number, and check to make sure it is a valid integer
+                Console.WriteLine();
                 if (!(int.TryParse(Console.ReadLine(), out input)))
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
