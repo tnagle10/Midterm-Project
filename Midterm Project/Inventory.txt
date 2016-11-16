@@ -1,4 +1,3 @@
-
 beverage,coffee-chocolate,french roast,4.5,25
 beverage,coffee-flat-white,New Zealand-make,3.5,15
 beverage,coffee-sugar free,Michigan-starbucks,6,20
