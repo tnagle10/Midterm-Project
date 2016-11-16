@@ -29,23 +29,23 @@ namespace Midterm_Project
             allTotals.Add(grandTotal);
             Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(String.Format("{0,-13} {1,0} {2,13}", " ", "RECIEPT", " "));
+            Console.WriteLine(String.Format("{0,-18} {1,0} {2,18}", " ", "RECIEPT", " "));
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("---------------------------------------------");
             foreach (var item in Cart)
             {
                 for (int i = 0; i < item.Quantity; i++)
                 {
-                    Console.WriteLine(String.Format("{0,-10} {1,24}", item.Name, item.Price.ToString("C")));
+                    Console.WriteLine(String.Format("{0,-10} {1,34}", item.Name, item.Price.ToString("C")));
                 }
                 
             }
 
-            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("---------------------------------------------");
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(String.Format("{0,-10} {1,24}","SUBTOTAL",subTotal.ToString("C")));
-            Console.WriteLine(String.Format("{0,-10} {1,24}","SALESTAX",taxTotal.ToString("C")));
-            Console.WriteLine(String.Format("{0,-10} {1,24}","GRANDTOTAL",grandTotal.ToString("C")));
+            Console.WriteLine(String.Format("{0,-10} {1,34}","SUBTOTAL",subTotal.ToString("C")));
+            Console.WriteLine(String.Format("{0,-10} {1,34}","SALESTAX",taxTotal.ToString("C")));
+            Console.WriteLine(String.Format("{0,-10} {1,34}","GRANDTOTAL",grandTotal.ToString("C")));
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine();
             return (allTotals);
@@ -126,6 +126,7 @@ namespace Midterm_Project
                             Thread.Sleep(600);
                         }
                         Console.ResetColor();
+                        Console.WriteLine();
                     }
                     else if (Verify == 2)
                     {
