@@ -203,28 +203,29 @@ namespace Midterm_Project
             */
 
             // Create a hash table of categories      
-            Hashtable categories = createCategoryList(inventory);
+            Hashtable catHash = createCategoryList(inventory);
             // Boolean value to test for valid input
             Boolean valid = false;
-            
+            List<string> catList = new List<string>();
             // Category number that user picks
             int input = 0;
             // List of category names.  Put it to list for sorting.
-            List<string> catList = new List<string>();
             
-
-            Console.WriteLine("*****************************************************************************");
+            
+             Console.WriteLine("*****************************************************************************");
             Console.WriteLine("*                Welcome to the Grand Circus Grocery Store                  *");
             Console.WriteLine("*                                                                           *");
             Console.WriteLine("*****************************************************************************");
             while (valid == false)
             {
-        
+                catList.Clear();
+                
                 Console.WriteLine("\nPlease choose a product category:");
                 // For each entry in the Hash table, create an entry in catNames array
                 // This is just a list of categories
-                foreach (DictionaryEntry entry in categories)
+                foreach (DictionaryEntry entry in catHash)
                 {
+                    
                    catList.Add(entry.Value.ToString());
                 }
 
@@ -234,6 +235,7 @@ namespace Midterm_Project
                 // Print the categories in a list with a number corresponding to each category
                 for (int i = 0; i < catList.Count; i++)
                 {
+                    
                     Console.WriteLine((i + 1).ToString().PadLeft(3) + ": "+ catList[i]);
                 }
 
